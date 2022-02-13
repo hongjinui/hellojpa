@@ -3,6 +3,7 @@ package hellohjpa;
 import hellohjpa.entity.Member;
 import hellohjpa.entity.MemberType;
 import hellohjpa.entity.Team;
+import hellohjpa.service.JpaService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -13,61 +14,27 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
+
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
+
+        // EntityManagerFactory 객체를 생성해서
+        // 각각의 메소드에 EntityManager 객체를 생성하는데 이게 맞나?
+        // EntityManager 객체 하나로 모든 메소드를 실행해야할까? 비즈니스 로직이라고 가장했을 때
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
 
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction tx =  em.getTransaction();
-        tx.begin();
+        // Member, Team 객체가 서로 연관 관계가를 가지지 않음
+        JpaService.basic(emf);
 
-        Team team = new Team();
-        team.setName("teamA");
+        // MemberOneDirect ->  TeamOneDirect 단방향
+        JpaService.oneDirect(emf);
 
+        // MemberAcrossDirect <-> TeamAcrossDirect 양방향
+        JpaService.AcrossDirect(emf);
 
-        // Team 객체 영속성 부여? - DB에 저장
-        // Make an instance managed and persistent.
-        em.persist(team);
-
-        Member member = new Member();
-        member.setName("안녕하세요");
-        member.setMemberType(MemberType.ADMIN);
-        member.setTeam(team);
-
-        member.setLocalDate(LocalDate.now());
-        member.setLocalDateTime(LocalDateTime.now());
-
-        // Member 객체 영속성 부여? - DB에 저장
-        // Make an instance managed and persistent.
-        em.persist(member);
-
-
-        // 업데이트
-//        team = new Team();
-//        team.setName("teamB");
-//        em.persist(team);
-//        member.setTeam(team);
-
-        // 쿼리를 한 번에 다 날림
-        // 하지 않으면 캐시로 select 쿼리를 볼 수 없
-        em.flush();
-        em.clear();
-
-        Member findMember = em.find(Member.class, member.getId());
-        Team findTeam = findMember.getTeam();
-
-        List<Member> members = findTeam.getMembers();
-        for (Member member1 : members) {
-            System.out.println("member1 = " + member1);
-        }
-
-        tx.commit();
-
-        em.close();
         emf.close();
-
 
     }
 }
