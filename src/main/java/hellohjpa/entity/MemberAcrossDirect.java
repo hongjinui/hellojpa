@@ -5,6 +5,8 @@ import javax.persistence.*;
 @Entity(name = "TB_MEMBERACROSSDIRECT")
 public class MemberAcrossDirect {
 
+    // 양방향
+
     @Id
     @GeneratedValue
     private long id;

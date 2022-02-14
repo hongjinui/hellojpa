@@ -43,4 +43,13 @@ public class Member {
     public void setMemberType(MemberType memberType) {
         this.memberType = memberType;
     }
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", memberType=" + memberType +
+                '}';
+    }
 }

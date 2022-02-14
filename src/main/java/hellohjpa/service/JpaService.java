@@ -23,7 +23,7 @@ public class JpaService {
             member.setName("hellojpa");
             member.setMemberType(MemberType.ADMIN);
 
-//         Member 객체 영속성 컨텍스트 관리 - DB에 저장
+//         Member 객체 영속성 컨텍스트 관리 - DB에 저장향
 //         1차 캐시에 저장
             em.persist(member);
 

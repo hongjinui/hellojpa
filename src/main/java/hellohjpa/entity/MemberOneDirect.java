@@ -5,6 +5,8 @@ import javax.persistence.*;
 @Entity(name = "TB_MEMBERONEDIRECT")
 public class MemberOneDirect {
 
+    // 단방향
+
     @Id
     @GeneratedValue
     private long id;

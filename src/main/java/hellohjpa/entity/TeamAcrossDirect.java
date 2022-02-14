@@ -7,6 +7,8 @@ import java.util.List;
 @Entity(name = "TB_TEAMACROSSDIRECT")
 public class TeamAcrossDirect {
 
+    // 양방향
+
     @Id
     @GeneratedValue
     private long id;

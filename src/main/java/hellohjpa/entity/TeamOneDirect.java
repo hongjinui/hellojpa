@@ -7,6 +7,8 @@ import java.util.List;
 @Entity(name = "TB_TEAMONEDIRECT")
 public class TeamOneDirect {
 
+    // 단방향
+
     @Id
     @GeneratedValue
     private long id;
