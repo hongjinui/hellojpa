@@ -32,10 +32,16 @@ public class Main {
         JpaService.oneDirect(emf);
 
         // MemberAcrossDirect <-> TeamAcrossDirect 양방향
-        JpaService.AcrossDirect(emf);
+        JpaService.bothDirect(emf);
 
         // jpql 단일 객체
         JpqlService.basicJpql(emf);
+
+        // jpql MemberOneDirect ->  TeamOneDirect 단방향
+        JpqlService.oneDirect(emf);
+
+        // jpql MemberAcrossDirect <-> TeamAcrossDirect 양방향
+        JpqlService.bothDirect(emf);
 
         emf.close();
 

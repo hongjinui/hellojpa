@@ -7,8 +7,8 @@
         <class>hellohjpa.entity.Team</class>
         <class>hellohjpa.entity.MemberOneDirect</class>
         <class>hellohjpa.entity.TeamOneDirect</class>
-        <class>hellohjpa.entity.MemberAcrossDirect</class>
-        <class>hellohjpa.entity.TeamAcrossDirect</class>
+        <class>hellohjpa.entity.MemberBothDirect</class>
+        <class>hellohjpa.entity.TeamBothDirect</class>
 
         <properties>
 

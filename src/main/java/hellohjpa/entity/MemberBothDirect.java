@@ -1,9 +1,16 @@
 package hellohjpa.entity;
 
+import lombok.ToString;
+
 import javax.persistence.*;
 
-@Entity(name = "TB_MEMBERACROSSDIRECT")
-public class MemberAcrossDirect {
+@NamedQuery(name = "selectMemberBD",
+    query = "select m,m.team from TB_MEMBERBOTHDIRECT m"
+)
+
+@ToString
+@Entity(name = "TB_MEMBERBOTHDIRECT")
+public class MemberBothDirect {
 
     // 양방향
 
@@ -43,8 +50,8 @@ public class MemberAcrossDirect {
      *         쿼리를 날려야 하는 경우 다른 방법이 있기때문에 그 방법을 사용하고 웬만하면 LAZY로 하자
      *
      * */
-//    @ManyToOne(fetch = FetchType.EAGER)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
+//    @ManyToOne(fetch = FetchType.LAZY)
     /*
      *   @JoinColumn
      *   영상을 보기 전에는 다른 엔티티와 join 컬럼을 설정하는 어노테이션인줄 알았는데 그런 기능을 하는 어노테이션이 아니고
@@ -52,7 +59,7 @@ public class MemberAcrossDirect {
      *   잘 못 이해한 내용일 수 있으니 다시 확인 필요하긴 하다
      * */
     @JoinColumn(name = "TEAM_ID")
-    private TeamAcrossDirect team;
+    private TeamBothDirect team;
 
     public long getId() {
         return id;
@@ -78,22 +85,13 @@ public class MemberAcrossDirect {
         this.memberType = memberType;
     }
 
-    public TeamAcrossDirect getTeam() {
+    public TeamBothDirect getTeam() {
         return team;
     }
 
-    public void setTeam(TeamAcrossDirect team) {
+    public void setTeam(TeamBothDirect team) {
         this.team = team;
         team.getMembers().add(this);
     }
 
-    @Override
-    public String toString() {
-        return "MemberAcrossDirect{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", memberType=" + memberType +
-                ", team=" + team +
-                '}';
-    }
 }

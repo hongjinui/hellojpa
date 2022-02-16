@@ -5,8 +5,6 @@ import hellohjpa.entity.*;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
-import java.util.List;
 
 public class JpaService {
 
@@ -66,15 +64,29 @@ public class JpaService {
 
             // Team 객체 저장
             TeamOneDirect team = new TeamOneDirect();
-            team.setName("TeamTest");
+            team.setName("개발실");
             em.persist(team);
 
             // Member 객체 저장
             MemberOneDirect member = new MemberOneDirect();
-            member.setName("테스트입니다");
+            member.setName("홍진의");
             member.setMemberType(MemberType.ADMIN);
             member.setTeam(team);
             em.persist(member);
+
+            // Member 객체 저장
+            MemberOneDirect member2 = new MemberOneDirect();
+            member2.setName("호랑이");
+            member2.setMemberType(MemberType.MEMBER);
+            member2.setTeam(team);
+            em.persist(member2);
+
+            // Member 객체 저장
+            MemberOneDirect member3 = new MemberOneDirect();
+            member3.setName("금강산");
+            member3.setMemberType(MemberType.NONMEMBER);
+            member3.setTeam(team);
+            em.persist(member3);
 
             MemberOneDirect findMember = em.find(MemberOneDirect.class, 4L);
 
@@ -93,7 +105,7 @@ public class JpaService {
 
     }
 
-    public static void AcrossDirect(EntityManagerFactory emf){
+    public static void bothDirect(EntityManagerFactory emf){
 
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
@@ -101,19 +113,19 @@ public class JpaService {
 
         try {
 
-            TeamAcrossDirect team = new TeamAcrossDirect();
+            TeamBothDirect team = new TeamBothDirect();
             team.setName("AcrossTeam");
             em.persist(team);
 
-            MemberAcrossDirect member = new MemberAcrossDirect();
+            MemberBothDirect member = new MemberBothDirect();
             member.setName("새로운맴버입니다");
-            member.setMemberType(MemberType.USER);
+            member.setMemberType(MemberType.MEMBER);
             member.setTeam(team);
             em.persist(member);
 
-            MemberAcrossDirect member2 = new MemberAcrossDirect();
+            MemberBothDirect member2 = new MemberBothDirect();
             member2.setName("새로운맴버입니다2");
-            member2.setMemberType(MemberType.USER);
+            member2.setMemberType(MemberType.MEMBER);
             member2.setTeam(team);
             em.persist(member2);
 
@@ -138,14 +150,19 @@ public class JpaService {
 //                System.out.println("memberAcrossDirect = " + memberAcrossDirect);
 //            }
 
-            MemberAcrossDirect member3 = new MemberAcrossDirect();
+            MemberBothDirect member3 = new MemberBothDirect();
             member3.setName("새로운맴버입니다3");
-            member3.setMemberType(MemberType.USER);
+            member3.setMemberType(MemberType.MEMBER);
             em.persist(member3);
 
             // 연관 관계의 주인이 아닌 객체를 통해 업데이트 하기때문에
             // FK가 들어가지 않는다. 자주 하는 실수임 - 중요함
             team.getMembers().add(member3);
+
+            em.clear();
+
+            em.find(MemberBothDirect.class, 8L);
+
 
 
         } catch (Exception e) {

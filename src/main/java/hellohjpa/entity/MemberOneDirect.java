@@ -1,7 +1,16 @@
 package hellohjpa.entity;
 
+import lombok.ToString;
+
 import javax.persistence.*;
 
+@NamedQuery(name = "selectMemberOD"
+        , query = "select m from TB_MEMBERONEDIRECT m "
+//        + "inner join TB_TEAMONEDIRECT t "
+//        + "on m.team.id = t.id "
+//        + "where m.name = :memberName"
+)
+@ToString
 @Entity(name = "TB_MEMBERONEDIRECT")
 public class MemberOneDirect {
 
@@ -86,13 +95,4 @@ public class MemberOneDirect {
         this.team = team;
     }
 
-    @Override
-    public String toString() {
-        return "MemberOneDirect{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", memberType=" + memberType +
-                ", team=" + team +
-                '}';
-    }
 }

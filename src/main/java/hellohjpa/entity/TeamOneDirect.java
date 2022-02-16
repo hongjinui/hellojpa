@@ -1,9 +1,12 @@
 package hellohjpa.entity;
 
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@ToString
 @Entity(name = "TB_TEAMONEDIRECT")
 public class TeamOneDirect {
 
@@ -49,11 +52,4 @@ public class TeamOneDirect {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return "TeamOneDirect{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
 }

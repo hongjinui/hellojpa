@@ -1,18 +1,16 @@
 package hellohjpa.service;
 
 
-import hellohjpa.entity.Member;
-import hellohjpa.entity.MemberType;
-import hellohjpa.entity.Team;
+import hellohjpa.entity.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import java.util.List;
+import java.util.*;
 
 public class JpqlService {
 
-    public static void basicJpql(EntityManagerFactory emf){
+    public static void basicJpql(EntityManagerFactory emf) {
 
         // 단일 객체
 
@@ -21,8 +19,7 @@ public class JpqlService {
 
         tx.begin();
 
-        try{
-
+        try {
             // @Entity name 속성으로 TB_MEMBER을 선언 했기 때문에 Member 대신 넣음
             /*
                 라이크 검색 쿼리
@@ -37,7 +34,7 @@ public class JpqlService {
             */
             String likeJpql = "select m from TB_MEMBER m where m.name like '%byejpa%'";
 
-            List<Member> members= em.createQuery(likeJpql, Member.class).getResultList();
+            List<Member> members = em.createQuery(likeJpql, Member.class).getResultList();
 
             for (Member member : members) {
                 System.out.println("member = " + member);
@@ -55,7 +52,7 @@ public class JpqlService {
                     member0_.MEMBER_TYPE=?
             */
             String setParamJpql = "select m from TB_MEMBER m where m.memberType = :memberType";
-            List<Member> tMembers = em.createQuery(setParamJpql,Member.class)
+            List<Member> tMembers = em.createQuery(setParamJpql, Member.class)
                     .setParameter("memberType", MemberType.ADMIN)
                     .getResultList();
 
@@ -74,17 +71,74 @@ public class JpqlService {
             String pagingJpql = "select t from TB_TEAM t";
             List<Team> teams = em.createQuery(pagingJpql, Team.class)
                     .setFirstResult(0)
-                    .setMaxResults(10)
+                    .setMaxResults(5)
                     .getResultList();
 
             for (Team team : teams) {
                 System.out.println("pagingTeam = " + team);
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
+            tx.rollback();
+        } finally {
+            tx.commit();
+            em.close();
+        }
+
+    }
+
+    public static void oneDirect(EntityManagerFactory emf) {
+
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+
+        tx.begin();
+
+        try {
+
+            List<MemberOneDirect> members = em.createNamedQuery("selectMemberOD", MemberOneDirect.class)
+//                    .setParameter("memberName", "홍진의")
+                    .getResultList();
+
+            for (MemberOneDirect member : members) {
+                System.out.println("member = " + member);
+            }
+
+//            System.out.println("selectMember = " + member);
+//            System.out.println("selectMember = " + member.getTeam().getName());
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            tx.rollback();
+        } finally {
+            tx.commit();
+            em.close();
+        }
+
+    }
+
+    public static void bothDirect(EntityManagerFactory emf){
+
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+
+        tx.begin();
+
+        try {
+//
+//            List<MemberBothDirect> members = em.createNamedQuery("selectMemberBD", MemberBothDirect.class)
+//                    .getResultList();
+//
+//            for (MemberBothDirect member : members) {
+//                System.out.println("selectMember Both = " + member);
+//            }
+
         }catch (Exception e){
             e.printStackTrace();
             tx.rollback();
-        }finally{
+        }finally {
             tx.commit();
             em.close();
         }

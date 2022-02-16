@@ -44,12 +44,4 @@ public class Member {
         this.memberType = memberType;
     }
 
-    @Override
-    public String toString() {
-        return "Member{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", memberType=" + memberType +
-                '}';
-    }
 }

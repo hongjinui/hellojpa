@@ -1,11 +1,14 @@
 package hellohjpa.entity;
 
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "TB_TEAMACROSSDIRECT")
-public class TeamAcrossDirect {
+@ToString
+@Entity(name = "TB_TEAMBOTHDIRECT")
+public class TeamBothDirect {
 
     // 양방향
 
@@ -23,7 +26,7 @@ public class TeamAcrossDirect {
      *
      * */
     @OneToMany(mappedBy = "team")
-    private List<MemberAcrossDirect> members = new ArrayList<>();
+    private List<MemberBothDirect> members = new ArrayList<>();
 
     public long getId() {
         return id;
@@ -41,19 +44,12 @@ public class TeamAcrossDirect {
         this.name = name;
     }
 
-    public List<MemberAcrossDirect> getMembers() {
+    public List<MemberBothDirect> getMembers() {
         return members;
     }
 
-    public void setMembers(List<MemberAcrossDirect> members) {
+    public void setMembers(List<MemberBothDirect> members) {
         this.members = members;
     }
 
-    @Override
-    public String toString() {
-        return "TeamAcrossDirect{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
 }
